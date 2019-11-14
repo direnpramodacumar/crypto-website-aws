@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <!-- Styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .card{
+            max-width: 30rem;
+        }
+        .card-img-top{
+            max-width: 2rem;
+        }
+        .carousel{
+            height: 400px;
+        }
+        .card-header{
+            color: white;
+        }
+    </style>
+    <!-- Script -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Include function that gets crypto, sentiment and the synthetic data -->
+    <script src="getData.js"></script>
+    <title>WebSocket Client</title>
+    
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">CryptoView<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                  <a class="nav-link" href="synthetic.html">Synthetic Data</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+     <!-- Container -->
+    <div class="container">
+        <br>
+        <br>
+        <div class="row" >
+            <div class="col">
+                 <!-- Bitcoin card -->
+                <div class="card bg-dark">
+                    <div class="card-header">
+                        <img class="card-img-top" src="images/BTC.png" alt="Card image cap">
+                        Bitcoin
+                    </div>
+                    <div id="carouselIndicators" class="carousel slide" data-ride="carousel" data-interval="false"> 
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselIndicators" data-slide-to="1"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div id="BitcoinDiv" ></div>
+                            </div>
+                            <div class="carousel-item">
+                                <div id="BitcoinSDiv"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                 <!-- Litecoin card -->
+                <div class="card bg-dark">
+                    <div class="card-header">
+                        <img class="card-img-top" src="images/LTC.png" alt="Card image cap">
+                        Litecoin
+                    </div>
+                    <div id="carouselIndicator1" class="carousel slide" data-ride="carousel" data-interval="false" >
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselIndicator1" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselIndicator1" data-slide-to="1"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div id="LitecoinDiv" ></div>
+                            </div>
+                            <div class="carousel-item">
+                                <div id="LitecoinSDiv" ></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row" >
+            <div class="col">
+                <!-- Ethereum card -->
+                    <div class="card bg-dark mx-auto">
+                        <div class="card-header">
+                            <img class="card-img-top" src="images/ETH.png" alt="Card image cap">
+                        Ethereum
+                        </div>
+                        <div id="carouselIndicator2" class="carousel slide" data-ride="carousel" data-interval="false">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselIndicator2" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselIndicator2" data-slide-to="1"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div id="EthereumDiv" ></div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div id="EthereumSDiv" ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <div class="row" >
+                <div class="col">
+                     <!-- EOS card -->
+                    <div class="card bg-dark ">
+                        <div class="card-header">
+                            <img class="card-img-top" src="images/EOS.png" alt="Card image cap">
+                            EOS
+                        </div>
+                        <div id="carouselIndicator3" class="carousel slide" data-interval="false" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselIndicator3" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselIndicator3" data-slide-to="1"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div id="EOSDiv" ></div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div id="EOSSDiv"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                     <!-- Ripple card -->
+                    <div class="card bg-dark ">
+                        <div class="card-header">
+                            <img class="card-img-top" src="images/XRP.png" alt="Card image cap">
+                            Ripple
+                        </div>
+                        <div id="carouselIndicator4" class="carousel slide" data-ride="carousel" data-interval="false">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselIndicator4" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselIndicator4" data-slide-to="1"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div id="RippleDiv" ></div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div id="RippleSDiv" ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div> 
+        <br>       
+    </div>
+
+    <script>
+        //Open connection
+        var connection = new WebSocket("wss://98n1mhhhxe.execute-api.us-east-1.amazonaws.com/dev");
+        
+        
+        connection.onopen = function(event){
+            console.log("Connected: " + JSON.stringify(event));
+            sendMessage();
+        };
+
+    
+        //Send message to server
+        function sendMessage() {
+            //Create message to be sent to server empty
+            var msgObject = {
+            action: "sendMessage",
+            data:"" 
+            };
+
+            //Send message object
+            connection.send(JSON.stringify(msgObject));
+        }
+
+        //Output messages from the server
+        connection.onmessage = function(msg){
+            //call the function plot 
+            plotData(JSON.parse(msg.data));
+        }
+
+        //Log errors
+        connection.onerror = function (error) {
+            console.log("WebSocket Error: " + JSON.stringify(error));
+        }
+
+        
+        function plotData(dat) {
+            //Get test data
+            let currencyData = getCurrencyData(dat);
+            //Work through the four currencies
+            currencyData.forEach(currency => {
+                //Specify how chart should be drawn
+                let trace1 = {
+                    x: currency.x,
+                    y: currency.y,
+                    mode: 'line',
+                    name: currency.name,
+                    marker: {
+                        color: 'rgb(219, 64, 82)',
+                        size: 12
+                    }
+                };
+                let trace2 = {
+                    x: currency.pt,
+                    y: currency.p,
+                    mode: 'line',
+                    name: 'Mean',
+                    line: {
+                        color: 'rgb(55, 128, 191)',
+                        width: 1
+                    }
+                };    
+                //Set up graph
+                let layout = {
+                    xaxis: {
+                        title: 'Time'
+                    },
+                    yaxis: {
+                        title: 'Price (£)'
+                    },
+                    height: 350,
+                    width: 480,
+                };
+                //Data for graph is an array of lines for graph
+                let data = [trace1,trace2];
+                
+                //Get reference to Div where chart will be drawn
+                let chartDiv = document.getElementById(currency.name + "Div");
+                //Plot data
+                Plotly.newPlot(chartDiv, data, layout,{responsive: true});
+            })
+            //Work through the four currencies sentiment 
+            let sentimentData = getSentimentData(dat);
+            
+            let xValues=[];
+                    
+            for (let j = 0,countPos=0,countNeg=0,countNeu=0; j < 5; j++) {
+                let object=[];
+                for (let i = 0; i < sentimentData[j].s.length; i++) {
+                    if(sentimentData[j].s[i]=="POSITIVE"){
+                        countPos++;
+                    }
+                    else if(sentimentData[j].s[i]=="NEGATIVE"){
+                        countNeg++;
+                    }
+                    else{
+                        countNeu++;
+                    }  
+                }
+                object.push(countPos,countNeg,countNeu);
+                xValues.push(object)
+            }
+                     
+
+            for (let i = 0; i < 5; i++) {
+                //Data for pie chart 
+                var data = [{
+                    values:  xValues[i],
+                    labels: ['Positive', 'Negative', 'Neutral'],
+                    type: 'pie'
+                }];
+                //Set up pie chart
+                let layout = {
+                    title: "Sentiment",
+                    height: 350,
+                    width: 480,
+                };
+                
+                //Get reference to Div where chart will be drawn
+                let chartDiv=sentimentData[i].name+"SDiv";
+                
+                //Plot data
+                Plotly.newPlot(chartDiv, data, layout);
+                       
+                    
+            }
+        }
+    </script>
+     
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

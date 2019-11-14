@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CryptoView</title>
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .card{
+            max-width: 15rem;
+        }
+        .card-img-top{
+            max-width: 12rem;
+        }
+        .modal-dialog{
+            max-width: 46rem;
+        }
+        .modal-title{
+            color: white;
+        }
+        .close{
+            color: white;
+        }
+    </style>
+    <!-- Script -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Include function that gets crypto, sentiment and the synthetic data -->
+    <script src="getData.js"></script>
+</head>
+<body">
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">CryptoView<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                  <a class="nav-link" href="synthetic.html">Synthetic Data</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+     <!-- Container -->
+    <div class="container text-center">
+        <br>
+        <br>
+        <br>
+        <div class="row text-center" >
+            <!-- Image of the Bitcoin -->
+            <div class="col-lg col-sm-6">
+                <div class="card bg-dark " >
+                    <div class="card-block text-center">
+                        <img class="card-img-top" src="images/BTC.png" alt="Card image cap" >
+                    </div>
+                    <a href="#" class="btn btn-primary stretched-link" data-toggle="modal" data-target="#bitcoinModal">Bitcoin</a>
+                </div>
+            </div>
+            <!-- Image of the EOS -->
+            <div class="col-lg col-sm-6" >
+                    <div class="card bg-dark " >
+                        <div class="card-block text-center">
+                            <img class="card-img-top" src="images/EOS.png" alt="Card image cap">
+                        </div>
+                        <a href="#" class="btn btn-primary stretched-link" data-toggle="modal" data-target="#eosModal">EOS</a>
+                    </div>
+            </div>
+             <!-- Image of the Ethereum -->
+            <div class="col-lg col-sm-6" >
+                    <div class="card bg-dark " >
+                        <div class="card-block text-center">
+                            <img class="card-img-top" src="images/ETH.png" alt="Card image cap" >
+                        </div>
+                        <a href="#" class="btn btn-primary stretched-link" data-toggle="modal" data-target="#ethereumModal">Ethereum</a>
+                    </div>
+            </div>
+             <!-- Image of the Ripple -->
+            <div class="col-lg col-sm-6" >
+                    <div class="card bg-dark " >
+                        <div class="card-block text-center">
+                            <img class="card-img-top" src="images/XRP.png" alt="Card image cap" >
+                        </div>
+                        <a href="#" class="btn btn-primary stretched-link" data-toggle="modal" data-target="#rippleModal">Ripple</a>
+                    </div>
+            </div>
+             <!-- Image of the Litecoin -->
+            <div class="col-lg col-sm-6" >
+                    <div class="card bg-dark " >
+                        <div class="card-block text-center">
+                            <img class="card-img-top" src="images/LTC.png" alt="Card image cap" >
+                        </div>
+                        <a href="#" class="btn btn-primary stretched-link" data-toggle="modal" data-target="#litecoinModal">Litecoin</a>
+                    </div>
+            </div>
+        </div>
+        <!-- Modal Fade of the Bitcoin -->
+        <div class="modal fade" id="bitcoinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" >
+                <div class="modal-content">
+                    <div class="modal-header bg-dark">
+                        <h5 class="modal-title" id="exampleModalLabel">Bitcoin Live</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="BitcoinDiv"></div>
+                        <hr>
+                        <div id="BitcoinSDiv"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Fade of the Ripple -->
+        <div class="modal fade" id="rippleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" >
+                <div class="modal-content">
+                    <div class="modal-header bg-dark " >
+                        <h5 class="modal-title" id="exampleModalLabel">Ripple Live</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="RippleDiv"></div>
+                        <hr>
+                        <div id="RippleSDiv"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Fade of the EOS -->
+        <div class="modal fade" id="eosModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" >
+                <div class="modal-content">
+                    <div class="modal-header bg-dark">
+                        <h5 class="modal-title" id="exampleModalLabel">EOS Live</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="EOSDiv"></div>
+                            <hr>
+                            <div id="EOSSDiv"></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <!-- Modal Fade of the Ethereum -->
+        <div class="modal fade" id="ethereumModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" >
+                <div class="modal-content">
+                    <div class="modal-header bg-dark">
+                        <h5 class="modal-title" id="exampleModalLabel">Ethereum Live</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="EthereumDiv"></div>
+                        <hr>
+                        <div id="EthereumSDiv"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Fade of the Litecoin -->
+        <div class="modal fade" id="litecoinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document"  >
+                <div class="modal-content" >
+                    <div class="modal-header bg-dark">
+                        <h5 class="modal-title" id="exampleModalLabel">Litecoin Live</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="LitecoinDiv"></div>
+                        <hr>
+                        <div id="LitecoinSDiv"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        //Open connection
+        var connection = new WebSocket("wss://98n1mhhhxe.execute-api.us-east-1.amazonaws.com/dev");
+        
+        connection.onopen = function(event){
+            console.log("Connected: " + JSON.stringify(event));
+            sendMessage();
+        };
+
+        //Send message to server
+        function sendMessage() {
+            //Create message to be sent to server empty
+            var msgObject = {
+            action: "sendMessage",
+            data:"" 
+            };
+
+            //Send message object
+            connection.send(JSON.stringify(msgObject));
+        }
+
+        //Output messages from the server
+        connection.onmessage = function(msg){
+            //call the function plot 
+            plotData(JSON.parse(msg.data));
+        }
+
+        //Log errors
+        connection.onerror = function (error) {
+            console.log("WebSocket Error: " + JSON.stringify(error));
+        }
+
+        
+        function plotData(dat) {
+            //Get test data
+            let currencyData = getCurrencyData(dat);
+            //Work through the four currencies
+            currencyData.forEach(currency => {
+                //Specify how chart should be drawn
+                let trace1 = {
+                    x: currency.x,
+                    y: currency.y,
+                    mode: 'line',
+                    name: currency.name,
+                    marker: {
+                        color: 'rgb(219, 64, 82)',
+                        size: 12
+                    }
+                };
+                let trace2 = {
+                    x: currency.pt,
+                    y: currency.p,
+                    mode: 'line',
+                    name: 'Mean',
+                    line: {
+                        color: 'rgb(55, 128, 191)',
+                        width: 1
+                    }
+                };    
+                //Set up graph
+                let layout = {
+                    xaxis: {
+                        title: 'Time'
+                    },
+                    yaxis: {
+                        title: 'Price (£)'
+                    },
+                    plot_bgcolor:"#9aa6b1",
+                    paper_bgcolor:"#9aa6b1"
+                };
+                //Data for graph is an array of lines for graph
+                let data = [trace1,trace2];
+                
+                //Get reference to Div where chart will be drawn
+                let chartDiv = document.getElementById(currency.name + "Div");
+                //Plot data
+                Plotly.newPlot(chartDiv, data, layout,{responsive: true});
+            })
+            //Work through the four currencies sentiment 
+            let sentimentData = getSentimentData(dat);
+ 
+            let xValues=[];
+                    
+            for (let j = 0,countPos=0,countNeg=0,countNeu=0; j < 5; j++) {
+                let object=[];
+                for (let i = 0; i < sentimentData[j].s.length; i++) {
+                    if(sentimentData[j].s[i]=="POSITIVE"){
+                        countPos++;
+                    }
+                    else if(sentimentData[j].s[i]=="NEGATIVE"){
+                        countNeg++;
+                    }
+                    else{
+                        countNeu++;
+                    }  
+                }
+                object.push(countPos,countNeg,countNeu);
+                xValues.push(object)
+            }
+                     
+            for (let i = 0; i < 5; i++) {
+                //Data for pie chart 
+                var data = [{
+                    values:  xValues[i],
+                    labels: ['Positive', 'Negative', 'Neutral'],
+                    type: 'pie'
+                }];
+                //Set up pie chart
+                let layout = {
+                    title: "Sentiment",
+                    height: 400,
+                    width: 702,
+                    plot_bgcolor:"#9aa6b1",
+                    paper_bgcolor:"#9aa6b1"
+                };
+                
+                //Get reference to Div where chart will be drawn
+                let chartDiv=sentimentData[i].name+"SDiv";
+                
+                //Plot data
+                Plotly.newPlot(chartDiv, data, layout);
+
+            }
+        }
+    </script>
+     
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

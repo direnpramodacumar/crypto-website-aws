@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+   <!-- Include function that gets crypto, sentiment and the synthetic data -->
+    <script src="getData.js"></script>
+    <title>WebSocket Client</title>
+</head>
+<body style="background-color:white">
+     <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">CryptoData</a>
+            </li>
+            <li class="nav-item active">
+                  <a class="nav-link" href="synthetic.html">Synthetic Data<span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    <!-- Container -->
+    <div class="container">
+        <h1>Synthetic Data</h1>
+        <div class="text-center">
+            <div id="SyntheticDiv"></div>
+        </div> 
+    </div>
+
+    <script>
+  
+    //Open connection
+    var connection = new WebSocket("wss://98n1mhhhxe.execute-api.us-east-1.amazonaws.com/dev/");
+    
+    connection.onopen = function(event){
+        console.log("Connected: " + JSON.stringify(event));
+        sendMessage();
+    };
+
+  
+    //Send message to server
+    function sendMessage(){
+        //Create message to be sent to server
+        var msgObject = {
+          action: "sendMessage",
+          data:"" 
+        };
+
+        //Send message object
+        connection.send(JSON.stringify(msgObject));
+
+        //Log result
+        console.log("Message sent: " + JSON.stringify(msgObject));
+    }
+
+        //Output the data from the server
+        connection.onmessage = function(msg){
+            //call the plot function
+            plotData(JSON.parse(msg.data));
+        }
+
+        //Log errors
+        connection.onerror = function (error) {
+            console.log("WebSocket Error: " + JSON.stringify(error));
+        }
+
+        //Plots randomly generate crypto data
+        function plotData(dat) {
+            let syntheticData = getSyntheticData(dat);
+
+            //Work through the synthetic data
+            syntheticData.forEach(synthetic => {
+
+            //Specify how chart should be drawn
+            let trace1 = {
+                    x: synthetic.x,
+                    y: synthetic.y,
+                    mode: 'line',
+                    name:  synthetic.name,
+                    line: {
+                        color: 'rgb(219, 64, 82)',
+                        width: 1
+                    }
+                };            
+                let trace2 = {
+                    x: synthetic.pt,
+                    y: synthetic.p,
+                    mode: 'line',
+                    name:  "mean",
+                    line: {
+                        color: 'rgb(55, 128, 191)',
+                        width: 1
+                    }
+                };        
+        
+            //Set up graph
+            let layout = {
+                title: synthetic.name,
+                xaxis: {
+                    title: 'Time(hours)'
+                },
+                yaxis: {
+                    title: 'Value'
+                },
+                plot_bgcolor:"white",
+                paper_bgcolor:"white"
+            };
+
+            //Data for graph is an array of lines for graph
+            let data = [trace1,trace2];
+            console.log(synthetic.name)
+            //Get reference to Div where chart will be drawn
+            let chartDiv = document.getElementById(synthetic.name + "Div");
+            //Plot data
+            Plotly.newPlot(chartDiv, data, layout);
+        })
+
+        }
+    </script>
+     
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
